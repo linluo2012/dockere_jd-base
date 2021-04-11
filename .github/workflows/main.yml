@@ -2,7 +2,7 @@
 name: sync-dockere/jd-base
 on:
   schedule:
-  - cron:  "*/15 * * * *"
+  - cron:  '*/15 * * * *'
   workflow_dispatch:
   watch:
     types: started
