@@ -24,11 +24,11 @@ jobs:
         source_branch: "master"
         destination_branch: "master"
         github_token: ${{ secrets.PAT }}
-        
-   - name: Merge main from master
+
+- name: Merge main from master
         uses: devmasx/merge-branch@v1.3.1
         if: env.PAT
-        with:
+        with:	
           type: now
           from_branch: master
           target_branch: main
