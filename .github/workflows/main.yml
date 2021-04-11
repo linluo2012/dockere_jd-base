@@ -1,0 +1,35 @@
+# File: .github/workflows/repo-sync.yml
+name: sync-dockere/jd-base
+on:
+  schedule:
+  - cron:  "*/15 * * * *"
+  workflow_dispatch:
+  watch:
+    types: started
+  push:
+    branches: [main]
+
+jobs:
+  repo-sync:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+    - name: repo-sync
+      uses: repo-sync/github-sync@v2
+      with:
+        source_repo: "https://github.com/dockere/jd-base.git"
+        source_branch: "master"
+        destination_branch: "master"
+        github_token: ${{ secrets.PAT }}
+        
+   - name: Merge main from master
+        uses: devmasx/merge-branch@v1.3.1
+        if: env.PAT
+        with:
+          type: now
+          from_branch: master
+          target_branch: main
+          github_token: ${{ secrets.PAT }}
